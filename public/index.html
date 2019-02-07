@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .diatasKKM{
+        color: green;
+      }
+      .dibawahKKM{
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+    <div id="root">
+      <h1 :class="[score > 6 ? 'diatasKKM' : 'dibawahKKM']">Nilai : {{ score }}0</h1>
+      <h2 v-if="score > 6">Kamu Lulus, yeee</h2>
+      <h2 v-else>Ayo Semangat!</h2>
+      <div v-for="(soal, indexsoal) in questions">
+        <h2>No {{indexsoal+1}}. {{soal.deskripsi}} </h2>
+        <div v-for="(pilihans, indexpiilhan) in soal.pilihan">
+          <input type="radio" @click="checkAnswer(indexsoal, indexpiilhan)" :value="pilihans[0]" :name="indexsoal">
+          <span v-text="pilihans[0]"></span>
+        </div>
+      </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+
+    var app = new Vue({
+      el: '#root',
+      data: {
+        score: 0,
+        jawabanbenar : [],
+        jawabansalah : [],
+        questions : [
+          {
+            deskripsi : "Tahun berapa indonesia merdeka ?",
+            pilihan : [
+              ["1912"],
+              ["1998"],
+              ["1945", true],
+              ["2077"]
+            ]
+          },
+          {
+            deskripsi : "Ikan bernapas dengan menggunakan ?",
+            pilihan : [
+              ["Insang", true],
+              ["Paruparu"],
+              ["Hidung"],
+              ["Air"]
+            ]
+          },
+          {
+            deskripsi : "Dasar negara republik indonesia adalah ?",
+            pilihan : [
+              ["Komunis"],
+              ["Pancasila", true],
+              ["Kapitalis"],
+              ["Sosialis"]
+            ]
+          },
+          {
+            deskripsi : "Ikon untuk menyimpan data pada program-program Microsoft seperti MS Word adalah ?",
+            pilihan : [
+              ["Gunting"],
+              ["Pencil"],
+              ["Penghapus"],
+              ["Disket", true]
+            ]
+          },
+          {
+            deskripsi : "Indra manusia yang digunakan untuk mengecap adalah ?",
+            pilihan : [
+              ["Lidah", true],
+              ["Stempel"],
+              ["Hidung"],
+              ["Telinga"]
+            ]
+          },
+          {
+            deskripsi : "Gunung tertinggi di dunia adalah ?",
+            pilihan : [
+              ["Gunung Jayawijaya"],
+              ["Gunung Everest", true],
+              ["Gunung Alpen"],
+              ["Gunung Fujiyama"]
+            ]
+          },
+          {
+            deskripsi : "Bahasa inggris dari kapal selam adalah ?",
+            pilihan : [
+              ["Subscribe"],
+              ["Submarine", true],
+              ["Substitusi"],
+              ["Subtitle"]
+            ]
+          },
+          {
+            deskripsi : "Negara terkaya di dunia adalah ?",
+            pilihan : [
+              ["Uni Emirat Arab"],
+              ["Wakanda"],
+              ["Rusia"],
+              ["Qatar", true]
+            ]
+          },
+          {
+            deskripsi : "Senjata yang dipakai Indonesia pada masa penjajahan adalah ?",
+            pilihan : [
+              ["Bamboe Roencing", true],
+              ["Groza"],
+              ["Pan"],
+              ["Payung kagura"]
+            ]
+          },
+          {
+            deskripsi : "diantara 1 Ton kapas, 1 Ton kertas dan 1 Ton besi, lebih berat yang mana ?",
+            pilihan : [
+              ["1 Ton kapas"],
+              ["1 Ton kertas"],
+              ["1 Ton besi"],
+              ["masing2 sama berat", true]
+            ]
+          }
+        ]
+      },
+
+      methods: {
+
+        checkAnswer(indexsoal, indexpiilhan) {
+          if(this.questions[indexsoal].pilihan[indexpiilhan][1]){
+            if(this.jawabanbenar.indexOf(indexsoal) == -1){
+              this.jawabanbenar.push(indexsoal);
+            }
+            if(this.jawabansalah.indexOf(indexsoal) != -1){
+              this.jawabansalah.splice(this.jawabansalah.indexOf(indexsoal),1);
+            }
+          }else{
+            if(this.jawabanbenar.indexOf(indexsoal) != -1){
+              this.jawabanbenar.splice(this.jawabanbenar.indexOf(indexsoal),1);
+              this.jawabansalah.push(indexsoal);
+            }else if(this.jawabansalah.indexOf(indexsoal) != -1){
+
+            }else{
+              this.jawabansalah.push(indexsoal);
+            }
+          }
+          this.score = this.jawabanbenar.length;
+        }
+      }
+      //
+      // mounted() {
+      //   document.querySelector('#button').addEventListener('click', () => {
+      //     let name = document.querySelector("#input");
+      //     app.names.push(name.value);
+      //     name.value = "";
+      //   });
+      // }
+    });
+
+
+    </script>
+  </center>
+  </body>
+</html>
